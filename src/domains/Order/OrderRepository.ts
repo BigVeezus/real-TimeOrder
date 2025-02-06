@@ -20,6 +20,24 @@ export class OrderRepository {
     }
   }
 
+  async getAllOrders(): Promise<Document | null[]> {
+    try {
+      return await OrderModel.find({});
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async getOneOrder(id: string): Promise<Document | null> {
+    try {
+      return await OrderModel.findById(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async findById(id: string): Promise<Document | null> {
     try {
       return OrderModel.findById(id);

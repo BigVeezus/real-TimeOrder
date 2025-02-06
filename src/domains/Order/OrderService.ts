@@ -27,9 +27,9 @@ export class OrderService {
       });
 
       return data;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      throw new Error("couldnt update order");
+      throw new Error(error);
     }
   }
 
@@ -44,6 +44,26 @@ export class OrderService {
     } catch (error) {
       console.log(error);
       throw new Error("couldnt update order");
+    }
+  }
+
+  async getAllOrders() {
+    try {
+      const orders = await this.orderRepository.getAllOrders();
+      return orders;
+    } catch (error) {
+      console.log(error);
+      throw new Error("couldnt get all orders");
+    }
+  }
+
+  async getOneOrder(id: string) {
+    try {
+      const order = await this.orderRepository.getOneOrder(id);
+      return order;
+    } catch (error: any) {
+      console.log(error);
+      throw new Error(error);
     }
   }
 

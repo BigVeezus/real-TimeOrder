@@ -19,8 +19,8 @@ export class OrderController {
         return;
       }
 
-      await this.orderService.updateOrderStatus(id, status);
-      res.status(200).json({ message: "Order status updated" });
+      const data = await this.orderService.updateOrderStatus(id, status);
+      res.status(200).json({ message: "Order status updated", data });
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(400).json({ error: error.message });
@@ -39,6 +39,34 @@ export class OrderController {
       }
       const data = await this.orderService.createOrder(payload);
       res.status(200).json({ message: "Order created", data });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: "An unknown error occurred." });
+      }
+    }
+  }
+
+  async getAllOrders(req: Request, res: Response): Promise<void> {
+    try {
+      const data = await this.orderService.getAllOrders();
+      res.status(200).json({ message: "Got all orders", data });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: "An unknown error occurred." });
+      }
+    }
+  }
+
+  async getOneOrder(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+
+      const data = await this.orderService.getOneOrder(id);
+      res.status(200).json({ message: "Got order by Id", data });
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(400).json({ error: error.message });
